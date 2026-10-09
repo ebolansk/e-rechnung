@@ -12,8 +12,11 @@ Das Tool nimmt PDF-Ausgangsrechnungen per Drag & Drop entgegen und erzeugt darau
 
 ## Start
 
-1. ZIP entpacken (zum Beispiel auf den Desktop). Es wird nichts installiert, es gibt keine Registry-Einträge und keine Admin-Rechte.
-2. `start.cmd` ausführen.
+1. **Vor dem Entpacken** die ZIP-Datei im Explorer mit Rechtsklick → Eigenschaften → Haken bei **„Zulassen“** → OK entsperren (siehe Hinweis unten).
+2. ZIP entpacken (zum Beispiel auf den Desktop). Es wird nichts installiert, es gibt keine Registry-Einträge und keine Admin-Rechte.
+3. `start.cmd` ausführen.
+
+**Windows-Sicherheitswarnung „Herausgeber konnte nicht verifiziert werden“:** Windows markiert aus dem Internet geladene Dateien und warnt bei ausführbaren Skripten, die keine digitale Signatur tragen. Das ist kein Virenfund, sondern heißt nur, dass das Programm (noch) nicht signiert ist. Entsperren Sie die ZIP vor dem Entpacken (Schritt 1). Falls Sie schon entpackt haben, entsperren Sie den Ordner in PowerShell: `Get-ChildItem -Recurse "C:\Pfad\E-Rechnung" | Unblock-File`. Wer die Herkunft prüfen möchte, baut das Programm selbst aus dem Quellcode (siehe Entwicklung). Auf Rechnern mit Richtlinien wie AppLocker oder Smart App Control kann der Start zusätzlich von der IT freigegeben werden müssen.
 
 Das Tool schreibt nur in zwei Bereiche: in den **Archivordner** (Standard: `archiv/` neben `start.cmd`) und in den Ordner **`daten/`** (Konfiguration, Mandanten, Protokoll, Zwischenspeicher). Der Programmordner muss dafür beschreibbar sein.
 
