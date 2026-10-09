@@ -1,0 +1,30 @@
+name: Fehler melden
+description: Etwas funktioniert nicht wie erwartet
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Bitte **keine echten Rechnungen, Namen, Kontodaten oder Steuernummern** in Texte oder Anhänge einfügen. Ein anonymisiertes oder erfundenes PDF genügt.
+  - type: input
+    id: version
+    attributes:
+      label: Version des Tools
+      description: Hilfe → Info
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: Betriebssystem
+      placeholder: Windows 11, Ubuntu 24.04 …
+  - type: textarea
+    id: was
+    attributes:
+      label: Was ist passiert, was hatten Sie erwartet?
+    validations:
+      required: true
+  - type: textarea
+    id: schritte
+    attributes:
+      label: Schritte zum Nachstellen

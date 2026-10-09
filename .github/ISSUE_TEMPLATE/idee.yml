@@ -1,0 +1,10 @@
+name: Idee oder Wunsch
+description: Eine Verbesserung oder neue Funktion vorschlagen
+labels: [enhancement]
+body:
+  - type: textarea
+    id: wunsch
+    attributes:
+      label: Was soll das Tool können, und wofür brauchen Sie es?
+    validations:
+      required: true

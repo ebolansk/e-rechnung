@@ -1,0 +1,28 @@
+E-Rechnung-Tool
+Copyright 2026 Stefan Schmitt
+
+Dieses Produkt steht unter der Apache License, Version 2.0 (siehe LICENSE).
+Es wird ohne Gewährleistung und ohne Haftung bereitgestellt, soweit gesetzlich zulässig.
+
+Enthaltene Drittkomponenten (Auswahl, jeweils unter ihrer eigenen Lizenz):
+
+Apache License 2.0
+  Mustang (org.mustangproject), Apache PDFBox, Jackson, Apache Commons, xmlresolver
+
+BSD-3-Clause / Eclipse Distribution License 1.0
+  Jakarta XML Binding und Activation, JAXB-Laufzeit, dom4j, stax-utils
+
+MIT
+  SLF4J
+
+Mozilla Public License 2.0 (unveränderte Bibliotheken; Quellcode über die
+jeweiligen Projekte bzw. Maven Central erhältlich)
+  Saxon-HE (net.sf.saxon, https://www.saxonica.com)
+  Mozilla Rhino (org.mozilla:rhino)
+  veraPDF (org.verapdf, https://verapdf.org) – wahlweise GPL-3.0 oder MPL-2.0,
+  dieses Produkt nutzt die MPL-2.0
+
+GPL-2.0 mit Classpath Exception
+  OpenJDK-Laufzeit (jlink-Image im Auslieferungsordner)
+
+Die vollständige Liste der Laufzeit-Abhängigkeiten erzeugt `mvn dependency:list`.

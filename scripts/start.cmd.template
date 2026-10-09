@@ -1,0 +1,9 @@
+@echo off
+setlocal
+set "HOME_DIR=%~dp0"
+if not exist "%HOME_DIR%daten" mkdir "%HOME_DIR%daten"
+if not exist "%HOME_DIR%daten\tmp" mkdir "%HOME_DIR%daten\tmp"
+rem Vorbereitetes Update einspielen oder vorherige Version wiederherstellen (Details: launcher/Swap)
+if exist "%HOME_DIR%launcher\launcher.jar" "%HOME_DIR%runtime\bin\java.exe" -XX:-UsePerfData -Xshare:auto -cp "%HOME_DIR%launcher\launcher.jar" de.provitex.erechnung.launcher.Swap "%HOME_DIR%."
+start "" "%HOME_DIR%runtime\bin\javaw.exe" -XX:-UsePerfData -Xshare:auto -Djava.io.tmpdir="%HOME_DIR%daten\tmp" -Derechnung.home="%HOME_DIR%." -Dfile.encoding=UTF-8 -cp "%HOME_DIR%app\lib\*" de.provitex.erechnung.Main
+endlocal
