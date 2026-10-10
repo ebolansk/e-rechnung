@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Führt vor jedem Push alle Tests aus und bricht bei einem Fehler ab. Aktivieren: git config core.hooksPath .githooks
+set -uo pipefail
+cd "$(git rev-parse --show-toplevel)"
+if [ -x scripts/test.sh ] && [ -d .tools ]; then
+  runner=(scripts/test.sh)
+else
+  runner=(mvn -B -ntp -q test)
+fi
+echo "pre-push: Tests laufen …"
+if ! "${runner[@]}" > /tmp/e-rechnung-pre-push.log 2>&1; then
+  tail -20 /tmp/e-rechnung-pre-push.log
+  echo "pre-push: Tests fehlgeschlagen, Push abgebrochen (Log: /tmp/e-rechnung-pre-push.log)." >&2
+  exit 1
+fi
+echo "pre-push: Tests grün."

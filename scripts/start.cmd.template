@@ -1,0 +1,18 @@
+@echo off
+setlocal
+set "HOME_DIR=%~dp0"
+if not exist "%HOME_DIR%daten" mkdir "%HOME_DIR%daten"
+if not exist "%HOME_DIR%daten\tmp" mkdir "%HOME_DIR%daten\tmp"
+rem Vorbereitetes Update einspielen oder bei Startfehler zur vorherigen Version zurueckkehren (Details: launcher/Swap).
+rem Der Austausch braucht eine eigene JVM; sie wird nur gestartet, wenn es etwas zu tun gibt (spart bei jedem normalen Start Zeit).
+set "NEEDSWAP="
+if exist "%HOME_DIR%daten\update\probation.flag" set "NEEDSWAP=1"
+if exist "%HOME_DIR%daten\update\neu\app\lib\e-rechnung.jar" set "NEEDSWAP=1"
+if defined NEEDSWAP if exist "%HOME_DIR%launcher\launcher.jar" "%HOME_DIR%runtime\bin\java.exe" -XX:-UsePerfData -Xshare:auto -XX:+UseSerialGC -cp "%HOME_DIR%launcher\launcher.jar" io.github.ebolansk.erechnung.launcher.Swap "%HOME_DIR%."
+rem Welche Version startet, steht in versionen\aktuell.txt (relativer Ordner, z. B. versionen/0.1.3); ohne Datei gilt der Altbestand app.
+set "APPREL=app"
+if exist "%HOME_DIR%versionen\aktuell.txt" set /p APPREL=<"%HOME_DIR%versionen\aktuell.txt"
+set "APPDIR=%HOME_DIR%%APPREL:/=\%"
+rem -splash zeigt den Startbildschirm sofort, noch vor dem Laden des Programms.
+start "" "%HOME_DIR%runtime\bin\javaw.exe" "-splash:%APPDIR%\splash.png" -XX:-UsePerfData -Xshare:auto -XX:+UseSerialGC -Djava.io.tmpdir="%HOME_DIR%daten\tmp" -Derechnung.home="%HOME_DIR%." -Dfile.encoding=UTF-8 -cp "%APPDIR%\lib\*" io.github.ebolansk.erechnung.Main
+endlocal

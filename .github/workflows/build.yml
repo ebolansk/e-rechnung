@@ -1,0 +1,88 @@
+name: Build und Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  # Pflicht-Check für main (Branch Protection): Name „test“ nicht ändern.
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Tests
+        run: mvn -B -ntp test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: screenshots-linux
+          path: |
+            target/ui-snapshots
+            target/screenshots
+          if-no-files-found: ignore
+
+  # Dieselben Tests unter Windows (echter Windows-Look; die Screenshots liegen als Artefakt bereit).
+  windows-tests:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Tests (mit Fenstertests)
+        shell: bash
+        run: mvn -B -ntp test -Dtest.headless=false
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: screenshots-windows
+          path: |
+            target/ui-snapshots
+            target/screenshots
+          if-no-files-found: ignore
+
+  # Baut das Windows-Paket (wie scripts/build-dist.sh) ...
+  dist:
+    needs: [test, windows-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Paket bauen
+        run: bash scripts/build-dist.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: E-Rechnung-win-x64
+          path: dist/E-Rechnung
+          retention-days: 7
+
+  # ... und startet es auf Windows mit der mitgelieferten Java-Laufzeit (Selbsttest: Beispielrechnung durch den ganzen Ablauf).
+  windows-selftest:
+    needs: dist
+    runs-on: windows-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: E-Rechnung-win-x64
+          path: pkg
+      - name: Selbsttest mit dem ausgelieferten Runtime
+        shell: cmd
+        run: |
+          set /p APPREL=<pkg\versionen\aktuell.txt
+          set "APPREL=%APPREL:/=\%"
+          pkg\runtime\bin\java.exe -XX:-UsePerfData -Dfile.encoding=UTF-8 -cp "pkg\%APPREL%\lib\*" io.github.ebolansk.erechnung.Main --selftest

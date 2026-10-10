@@ -1,0 +1,7 @@
+* text=auto eol=lf
+*.cmd text eol=crlf
+*.template text eol=lf
+*.pdf binary
+*.ttf binary
+*.zip binary
+*.png binary

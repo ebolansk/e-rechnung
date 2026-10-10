@@ -1,0 +1,17 @@
+target/
+.tools/
+dist/
+*.class
+.idea/
+*.iml
+.superpowers/
+docs/superpowers/
+
+# Laufzeitdaten, Archiv und Schluessel nie committen (oeffentliches Repository)
+daten/
+archiv/
+*.key
+.env
+
+# Interne Pruefberichte (nicht Teil des Repositorys)
+docs/checkup/
