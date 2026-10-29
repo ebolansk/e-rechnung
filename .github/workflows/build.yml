@@ -21,7 +21,7 @@ jobs:
           cache: maven
       - name: Tests
         run: mvn -B -ntp test
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: screenshots-linux
@@ -43,7 +43,7 @@ jobs:
       - name: Tests (mit Fenstertests)
         shell: bash
         run: mvn -B -ntp test -Dtest.headless=false
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: screenshots-windows
@@ -65,7 +65,7 @@ jobs:
           cache: maven
       - name: Paket bauen
         run: bash scripts/build-dist.sh
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: E-Rechnung-win-x64
           path: dist/E-Rechnung
