@@ -34,7 +34,7 @@
     <!-- Tests laufen ohne Bildschirm; mit -Dtest.headless=false (und einer Anzeige, unter Linux xvfb-run) auch die Fenstertests. -->
     <test.headless>true</test.headless>
     <mustang.version>2.26.0</mustang.version>
-    <jackson.version>2.22.3</jackson.version>
+    <jackson.version>2.22.4</jackson.version>
     <!-- Wird direkt benutzt (Text, Vorschau, PDF/A) und kommt sonst nur zufällig mit Mustang; so sieht Dependabot die Version. -->
     <pdfbox.version>3.0.8</pdfbox.version>
   </properties>
